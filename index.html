@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Treasure Hunt - Quest of the Lost Isle</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Treasure<span>Hunt</span></div>
+  <div class="topbar-right" id="topInfo"></div>
+</header>
+
+<!-- ============ START SCREEN ============ -->
+<main id="startScreen" class="screen">
+  <section class="card hero">
+    <div class="hero-icon" id="heroIcon"></div>
+    <p class="eyebrow">Quest of the Lost Isle</p>
+    <h1>Find the key.<br>Open the chest.</h1>
+    <p class="muted">Explore a foggy island, collect clues and coins, avoid hidden mud traps and
+      reach the treasure before your moves run out.</p>
+
+    <label class="field-label" for="nameInput">Your explorer name</label>
+    <input id="nameInput" class="input" maxlength="16" placeholder="e.g. Captain Jack" autocomplete="off">
+
+    <div class="field-label">Choose difficulty</div>
+    <div class="diff-grid" id="diffGrid">
+      <button class="diff" data-d="easy"><b>Easy</b><span>8 x 8 island<br>Wide vision</span></button>
+      <button class="diff active" data-d="medium"><b>Medium</b><span>10 x 10 island<br>Normal vision</span></button>
+      <button class="diff" data-d="hard"><b>Hard</b><span>12 x 12 island<br>Many traps</span></button>
+    </div>
+    <button id="startBtn" class="btn primary big">Start Adventure</button>
+  </section>
+
+  <aside class="side-col">
+    <section class="card">
+      <h3>How to play</h3>
+      <ul class="how">
+        <li><kbd>&#8593;</kbd><kbd>&#8592;</kbd><kbd>&#8595;</kbd><kbd>&#8594;</kbd> or <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to move</li>
+        <li>Each step costs <b>1 move</b>. Boulders and the sea block you.</li>
+        <li>Pick up <b>scrolls</b> to learn where the chest is hidden.</li>
+        <li>Watch the <b>hot / cold meter</b> - it shows how close you are.</li>
+        <li>You need the <b>golden key</b> to open the chest.</li>
+        <li>Press <kbd>H</kbd> for a hint (costs 3 moves). Clear 3 levels to win!</li>
+      </ul>
+    </section>
+    <section class="card">
+      <h3>Top treasure hunters</h3>
+      <ol class="lb" id="startLb"></ol>
+    </section>
+  </aside>
+</main>
+
+<!-- ============ GAME SCREEN ============ -->
+<main id="gameScreen" class="screen hidden">
+  <section class="board-wrap card">
+    <div class="board-head">
+      <div><span class="eyebrow" id="lvlLabel">LEVEL 1 / 3</span>
+        <h2 id="playerLabel">Explorer</h2></div>
+      <div class="score-box"><span>SCORE</span><b id="scoreVal">0</b></div>
+    </div>
+    <div id="board" class="board"></div>
+    <div id="toast" class="toast"></div>
+    <div class="dpad" id="dpad">
+      <button data-dir="up" aria-label="Up">&#9650;</button>
+      <button data-dir="left" aria-label="Left">&#9664;</button>
+      <button data-dir="down" aria-label="Down">&#9660;</button>
+      <button data-dir="right" aria-label="Right">&#9654;</button>
+    </div>
+  </section>
+
+  <aside class="side-col">
+    <section class="card">
+      <div class="stat-row"><span>Moves left</span><b id="movesVal">0</b></div>
+      <div class="bar"><div id="movesBar" class="bar-fill"></div></div>
+      <div class="chips">
+        <div class="chip" id="keyChip"><span id="keyIcon"></span><b>Key</b><em id="keyVal">Missing</em></div>
+        <div class="chip"><span id="coinIcon"></span><b>Coins</b><em id="coinVal">0 / 5</em></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="stat-row"><span>Treasure meter</span><b id="hotLabel">-</b></div>
+      <div class="meter"><div id="meterMark" class="meter-mark"></div></div>
+      <div class="meter-ends"><span>Freezing</span><span>Burning</span></div>
+    </section>
+
+    <section class="card">
+      <h3>Clue journal</h3>
+      <ol class="clues" id="clueList"></ol>
+    </section>
+
+    <section class="card legend">
+      <h3>Legend</h3>
+      <div class="legend-grid" id="legend"></div>
+    </section>
+
+    <div class="btn-row">
+      <button class="btn" id="hintBtn">Hint (H)</button>
+      <button class="btn ghost" id="menuBtn">Quit to menu</button>
+    </div>
+  </aside>
+</main>
+
+<!-- ============ RESULT MODAL ============ -->
+<div id="modal" class="modal hidden">
+  <div class="modal-card">
+    <div class="modal-icon" id="modalIcon"></div>
+    <h2 id="modalTitle"></h2>
+    <p class="muted" id="modalText"></p>
+    <div class="modal-stats" id="modalStats"></div>
+    <div id="modalLbWrap"><h3>Leaderboard</h3><ol class="lb" id="modalLb"></ol></div>
+    <div class="btn-row center">
+      <button class="btn primary" id="modalPrimary"></button>
+      <button class="btn ghost" id="modalSecondary">Main menu</button>
+    </div>
+  </div>
+</div>
+
+<footer class="foot">NMIET, Department of Information Technology 2026-27 &middot; Mini Project - Treasure Hunt</footer>
+<script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>
